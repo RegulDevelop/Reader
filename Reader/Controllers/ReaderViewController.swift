@@ -166,15 +166,8 @@ extension ReaderViewController: ActionsProtocol {
     }
     
     func pickerViewAction(font: String) {
-        if font == "Helvetica" {
-            myTextView.font = UIFont(name: "Helvetica", size: 20)
-        } else if font == "Palatino" {
-            myTextView.font = UIFont(name: "Palatino", size: 20)
-        } else if font == "American Typewriter" {
-            myTextView.font = UIFont(name: "American Typewriter", size: 20)
-        } else if font == "Courier New" {
-            myTextView.font = UIFont(name: "Courier New", size: 20)
-        }
+        
+        myTextView.font = UIFont(name: font, size: 20)
     }
 }
 
