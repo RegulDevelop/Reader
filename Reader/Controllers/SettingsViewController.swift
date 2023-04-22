@@ -9,11 +9,13 @@ import UIKit
 
 
 protocol ActionsProtocol {
+    
     func sliderAction(slider: Float)
     func pressButtonAction(button: UIButton)
     func segmentedControlAction(segment: UISegmentedControl)
     func switchAction(isOn: Bool)
     func pickerViewAction(font: String)
+    
 }
 
 
@@ -31,9 +33,10 @@ class SettingsViewController: UIViewController {
     var backgroundSwitch = UISwitch()
     var fontPickerView = UIPickerView()
     
-    let colorSlider = #colorLiteral(red: 1, green: 0.6919025779, blue: 0.04128493369, alpha: 1)
-    var arrayTitles = [UIImage(systemName: "textformat.size.smaller"), UIImage(systemName: "textformat.size.larger")]
-    var arrayName = ["Helvetica", "Palatino", "American Typewriter", "Courier New"]
+    var arraySegmentedControlFont = [UIImage(systemName: "textformat.size.smaller"), UIImage(systemName: "textformat.size.larger")]
+    var arrayPickerViewFont = ["Helvetica", "Palatino", "American Typewriter", "Courier New"]
+    
+    let colorYellow = #colorLiteral(red: 1, green: 0.6919025779, blue: 0.04128493369, alpha: 1)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,28 +45,33 @@ class SettingsViewController: UIViewController {
     }
     
     func createMethod() {
+        
         createSizeSlider()
         createbuttonTextColor()
         createFontSegmentedControl()
         createNightModeLabel()
         createBackgroundSwitch()
         createFontPickerView()
+        
     }
     
     func createSizeSlider() {
+        
         sizeSlider.frame = CGRect(x: 30, y: 20, width: 290, height: 30)
-        sizeSlider.minimumTrackTintColor = colorSlider
+        sizeSlider.minimumTrackTintColor = colorYellow
         sizeSlider.minimumValueImage = UIImage(systemName: "textformat.size.smaller")
         sizeSlider.maximumValueImage = UIImage(systemName: "textformat.size.larger")
-        sizeSlider.tintColor = colorSlider
-        sizeSlider.minimumValue = 20
-        sizeSlider.maximumValue = 50
+        sizeSlider.tintColor = colorYellow
+        sizeSlider.minimumValue = 20.0
+        sizeSlider.maximumValue = 50.0
         view.addSubview(sizeSlider)
         
         sizeSlider.addTarget(self, action: #selector(sizeSliderAction), for: .valueChanged)
+        
     }
     
     func createbuttonTextColor() {
+        
         buttonTextColorOriginal.frame = CGRect(x: 20, y: 65, width: 70, height: 50)
         buttonTextColorOriginal.setTitle("Aa", for: .normal)
         buttonTextColorOriginal.setTitleColor(.black, for: .normal)
@@ -105,50 +113,60 @@ class SettingsViewController: UIViewController {
         buttonTextColorBeige.setTitleColor(.black, for: .normal)
         buttonTextColorBeige.titleLabel?.font = UIFont(name: "Courier New", size: 25)
         buttonTextColorBeige.titleLabel?.textAlignment = .left
-        buttonTextColorBeige.backgroundColor = colorSlider
+        buttonTextColorBeige.backgroundColor = colorYellow
         buttonTextColorBeige.layer.cornerRadius = 10
         buttonTextColorBeige.tag = 4
         view.addSubview(buttonTextColorBeige)
         
         buttonTextColorBeige.addTarget(self, action: #selector(buttonTextColorAction), for: .touchDown)
+        
     }
     
     func createFontSegmentedControl() {
-        fontSegmentedControl = UISegmentedControl(items: arrayTitles as [Any])
+        
+        fontSegmentedControl = UISegmentedControl(items: arraySegmentedControlFont as [Any])
         fontSegmentedControl.frame = CGRect(x: 20, y: 130, width: 150, height: 30)
         fontSegmentedControl.selectedSegmentIndex = 0
         view.addSubview(fontSegmentedControl)
         
         fontSegmentedControl.addTarget(self, action: #selector(fontSegmentedControlAction), for: .valueChanged)
+        
     }
     
     func createNightModeLabel() {
+        
         nightModeLabel.frame = CGRect(x: 180, y: 130, width: 100, height: 30)
         nightModeLabel.text = "Night mode:"
         view.addSubview(nightModeLabel)
+        
     }
     
     func createBackgroundSwitch() {
+        
         backgroundSwitch.frame = CGRect(x: 280, y: 130, width: 50, height: 30)
         backgroundSwitch.isOn = false
         backgroundSwitch.onTintColor = .white
         backgroundSwitch.backgroundColor = .darkGray
         backgroundSwitch.layer.cornerRadius = 16
-        backgroundSwitch.thumbTintColor = colorSlider
+        backgroundSwitch.thumbTintColor = colorYellow
         view.addSubview(backgroundSwitch)
         
         backgroundSwitch.addTarget(self, action: #selector(backgroundSwitchAction), for: .valueChanged)
+        
     }
     
     func createFontPickerView() {
+        
         fontPickerView.frame = CGRect(x: 15, y: 165, width: 320, height: 80)
         fontPickerView.delegate = self
-        fontPickerView.dataSource = self
         view.addSubview(fontPickerView)
+        
     }
     
     @objc func sizeSliderAction(_ sender: UISlider) {
+        
         delegate?.sliderAction(slider: sender.value)
+        
     }
     
     @objc func buttonTextColorAction(_ sender: UIButton) {
@@ -156,7 +174,7 @@ class SettingsViewController: UIViewController {
         if sender.tag == 1 {
             buttonTextColorOriginal.layer.borderWidth = 2
             buttonTextColorOriginal.layer.borderColor = UIColor.black.cgColor
-            sizeSlider.value = 20
+            sizeSlider.value = 20.0
         } else {
             buttonTextColorOriginal.layer.borderWidth = 0
         }
@@ -164,7 +182,7 @@ class SettingsViewController: UIViewController {
         if sender.tag == 2 {
             buttonTextColorGray.layer.borderWidth = 2
             buttonTextColorGray.layer.borderColor = UIColor.white.cgColor
-            sizeSlider.value = 20
+            sizeSlider.value = 20.0
         } else {
             buttonTextColorGray.layer.borderWidth = 0
         }
@@ -172,7 +190,7 @@ class SettingsViewController: UIViewController {
         if sender.tag == 3 {
             buttonTextColorBlack.layer.borderWidth = 2
             buttonTextColorBlack.layer.borderColor = UIColor.white.cgColor
-            sizeSlider.value = 20
+            sizeSlider.value = 20.0
         } else {
             buttonTextColorBlack.layer.borderWidth = 0
         }
@@ -180,22 +198,26 @@ class SettingsViewController: UIViewController {
         if sender.tag == 4 {
             buttonTextColorBeige.layer.borderWidth = 2
             buttonTextColorBeige.layer.borderColor = UIColor.black.cgColor
-            sizeSlider.value = 20
+            sizeSlider.value = 20.0
         } else {
             buttonTextColorBeige.layer.borderWidth = 0
         }
         
         delegate?.pressButtonAction(button: sender)
+        
     }
     
     @objc func fontSegmentedControlAction(_ sender: UISegmentedControl) {
+        
         delegate?.segmentedControlAction(segment: sender)
+        
     }
     
     @objc func backgroundSwitchAction(_ sender: UISwitch) {
+        
         delegate?.switchAction(isOn: sender.isOn)
+        
     }
-    
 
 }
 
@@ -206,26 +228,29 @@ extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return arrayName.count
+        return arrayPickerViewFont.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return arrayName[row]
+        return arrayPickerViewFont[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-            if arrayName[row] == arrayName[0] {
-                delegate?.pickerViewAction(font: arrayName[0])
-            } else if arrayName[row] == arrayName[1] {
-                delegate?.pickerViewAction(font: arrayName[1])
-            } else if arrayName[row] == arrayName[2] {
-                delegate?.pickerViewAction(font: arrayName[2])
-            } else if arrayName[row] == arrayName[3] {
-                delegate?.pickerViewAction(font: arrayName[3])
-            }
+        switch arrayPickerViewFont[row] {
+        case arrayPickerViewFont[0]:
+            delegate?.pickerViewAction(font: arrayPickerViewFont[0])
+        case arrayPickerViewFont[1]:
+            delegate?.pickerViewAction(font: arrayPickerViewFont[1])
+        case arrayPickerViewFont[2]:
+            delegate?.pickerViewAction(font: arrayPickerViewFont[2])
+        case arrayPickerViewFont[3]:
+            delegate?.pickerViewAction(font: arrayPickerViewFont[3])
+        default:
+            break
+        }
+        
     }
-    
 }
 
 
